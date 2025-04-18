@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/kunalthakur/static/css/main.a9e5b994.css",
+    "main.js": "/kunalthakur/static/js/main.38035011.js",
+    "static/js/453.ab665532.chunk.js": "/kunalthakur/static/js/453.ab665532.chunk.js",
+    "static/media/kunal-pic.png": "/kunalthakur/static/media/kunal-pic.e6a318afba3a87981a30.png",
+    "index.html": "/kunalthakur/index.html",
+    "main.a9e5b994.css.map": "/kunalthakur/static/css/main.a9e5b994.css.map",
+    "main.38035011.js.map": "/kunalthakur/static/js/main.38035011.js.map",
+    "453.ab665532.chunk.js.map": "/kunalthakur/static/js/453.ab665532.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.a9e5b994.css",
+    "static/js/main.38035011.js"
+  ]
+}
