@@ -58,7 +58,7 @@ const InterestsSection = () => {
   );
 };
 
-function InterestsPage() {
+function InterestsPage({ isMobile }: { isMobile: boolean }) {
   const interests = [
     {
       icon: <a href="https://sillypointers.com/" target="_blank" rel="noopener noreferrer"><Trophy size={40} /></a>,
@@ -90,7 +90,7 @@ function InterestsPage() {
       
       <div className="flex justify-center">
         <div className="flex-1 max-w-4xl">
-          <div className="grid grid-cols-2 gap-12 mt-8">
+          <div className={`grid ${isMobile ? 'grid-cols-1' : 'grid-cols-2'} gap-12 mt-8`}>
             {interests.slice(0, 4).map((interest, index) => (
               <div 
                 key={index} 
@@ -125,7 +125,7 @@ function InterestsPage() {
   );
 }
 
-function ContactPage() {
+function ContactPage({ isMobile }: { isMobile: boolean }) {
   return (
     <div>
       <div className="flex justify-between items-center mb-12">
@@ -133,7 +133,7 @@ function ContactPage() {
       </div>
       
       <div className="max-w-4xl mx-auto bg-white p-8 shadow-sm rounded">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className={`grid ${isMobile ? 'grid-cols-1' : 'grid-cols-3'} gap-8`}>
           <div className="flex flex-col items-center text-center p-6 hover:bg-gray-50 rounded transition-colors duration-200">
             <div className="mb-4 p-4 bg-gray-50 rounded-full">
               <MapPin size={40} className="text-gray-500" />
@@ -167,6 +167,16 @@ function ContactPage() {
 export default function App() {
   const [currentPage, setCurrentPage] = useState<PageType>('about');
   const [transition, setTransition] = useState<TransitionType>('');
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
   
   const changePage = (page: PageType) => {
     setTransition('page-exit');
@@ -188,8 +198,8 @@ export default function App() {
   
   return (
     <div className="flex min-h-screen bg-white">
-      {/* Left Sidebar */}
-      <div className="w-48 min-h-screen bg-white shadow-md border-r-4 border-gray-200 flex flex-col fixed h-screen">
+      {/* Left Sidebar - Hidden on mobile, shown on desktop */}
+      <div className={`${isMobile ? 'hidden' : 'w-48'} min-h-screen bg-white shadow-md border-r-4 border-gray-200 flex flex-col fixed h-screen`}>
         <div className="p-4 flex flex-col items-center">
           <img src={kunalPic} alt="Profile" className="rounded-md mb-2 w-10 h-10 object-cover" />
           <h2 className="text-xl font-bold text-gray-800">Kunal Thakur</h2>
@@ -230,14 +240,46 @@ export default function App() {
         </div>
       </div>
       
+      {/* Mobile Navigation - Only shown on mobile */}
+      {isMobile && (
+        <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-50">
+          <div className="flex justify-around p-2">
+            <NavItem
+              label="About"
+              active={currentPage === 'about'}
+              onClick={() => changePage('about')}
+              mobile
+            />
+            <NavItem
+              label="Resume"
+              active={currentPage === 'resume'}
+              onClick={() => changePage('resume')}
+              mobile
+            />
+            <NavItem
+              label="Interests"
+              active={currentPage === 'interests'}
+              onClick={() => changePage('interests')}
+              mobile
+            />
+            <NavItem
+              label="Contact"
+              active={currentPage === 'contact'}
+              onClick={() => changePage('contact')}
+              mobile
+            />
+          </div>
+        </div>
+      )}
+      
       {/* Main Content */}
-      <div className="flex-1 p-8 bg-white ml-48">
+      <div className={`flex-1 p-4 md:p-8 bg-white ${isMobile ? '' : 'ml-48'}`}>
         <div className={`transition-all duration-500 transform-gpu ${getTransitionClass(transition, currentPage)}`}>
-          {currentPage === 'about' && <HomePage changePage={changePage} />}
-          {currentPage === 'home' && <HomePage changePage={changePage} />}
-          {currentPage === 'resume' && <ResumePage />}
-          {currentPage === 'interests' && <InterestsPage />}
-          {currentPage === 'contact' && <ContactPage />}
+          {currentPage === 'about' && <HomePage changePage={changePage} isMobile={isMobile} />}
+          {currentPage === 'home' && <HomePage changePage={changePage} isMobile={isMobile} />}
+          {currentPage === 'resume' && <ResumePage isMobile={isMobile} />}
+          {currentPage === 'interests' && <InterestsPage isMobile={isMobile} />}
+          {currentPage === 'contact' && <ContactPage isMobile={isMobile} />}
         </div>
       </div>
     </div>
@@ -245,54 +287,53 @@ export default function App() {
 }
 
 // Navigation Item Component
-function NavItem({ label, active, onClick }: { label: string; active: boolean; onClick: () => void }) {
+function NavItem({ label, active, onClick, mobile }: { label: string; active: boolean; onClick: () => void; mobile?: boolean }) {
   return (
     <div 
-      className={`py-3 px-6 cursor-pointer hover:bg-gray-100 ${active ? 'border-l-4 border-blue-500' : ''}`}
+      className={`${mobile ? 'flex flex-col items-center p-2' : 'py-3 px-6'} cursor-pointer hover:bg-gray-100 ${active ? (mobile ? 'text-blue-500' : 'border-l-4 border-blue-500') : ''}`}
       onClick={onClick}
       role="button"
       tabIndex={0}
       onKeyPress={(e) => e.key === 'Enter' && onClick()}
     >
-      <span className={`${active ? 'text-blue-500' : 'text-gray-700'}`}>{label}</span>
+      <span className={`${active ? 'text-blue-500' : 'text-gray-700'} ${mobile ? 'text-sm' : ''}`}>{label}</span>
     </div>
   );
 }
 
 // Home Page Component
-function HomePage({ changePage }: { changePage: (page: PageType) => void }) {
+function HomePage({ changePage, isMobile }: { changePage: (page: PageType) => void; isMobile: boolean }) {
   return (
     <div>
-      <div className="flex mb-12">
-        <div className="flex-1 flex justify-center">
-          <img src={kunalPic} alt="Profile" className="w-[450px] h-[450px] object-cover rounded-lg" />
+      <div className={`flex ${isMobile ? 'flex-col' : 'mb-12'}`}>
+        <div className={`flex-1 flex justify-center ${isMobile ? 'mb-8' : ''}`}>
+          <img src={kunalPic} alt="Profile" className={`${isMobile ? 'w-[300px] h-[300px]' : 'w-[450px] h-[450px]'} object-cover rounded-lg`} />
         </div>
-        <div className="flex-1 pl-8">
+        <div className={`flex-1 ${isMobile ? 'px-4' : 'pl-8'}`}>
           <p className="text-gray-500 mb-2">Product Management</p>
-          <h1 className="text-5xl font-bold text-gray-800 mb-6">Kunal Thakur</h1>
+          <h1 className={`${isMobile ? 'text-3xl' : 'text-5xl'} font-bold text-gray-800 mb-6`}>Kunal Thakur</h1>
           
           <p className="text-gray-600 mb-4">
             A seasoned AI-driven product leader with 17 years of experience, including 13 years in product
             management. My passion lies in driving digital transformation in B2B and B2C sectors through
             innovation and cross-functional team leadership. 
-
           </p>
           
           <p className="text-gray-600 mb-8">
             I have a proven track record in scaling products and optimizing operations for significant efficiency
-          gains, and I thrive in dynamic environments where strategic execution can lead to impactful business outcomes
+            gains, and I thrive in dynamic environments where strategic execution can lead to impactful business outcomes
           </p>
           
-          <div className="flex space-x-4 items-center">
+          <div className={`flex ${isMobile ? 'flex-col space-y-4' : 'space-x-4'} items-center`}>
             <a 
               href="/Kunal Thakur Resume 4.pdf" 
               download="Kunal Thakur Resume.pdf"
-              className="border-2 border-blue-500 text-blue-500 px-6 py-2 font-medium hover:bg-blue-50"
+              className="border-2 border-blue-500 text-blue-500 px-6 py-2 font-medium hover:bg-blue-50 w-full md:w-auto text-center"
             >
               Download CV
             </a>
             <button 
-              className="border-2 border-gray-300 text-gray-700 px-6 py-2 font-medium hover:bg-gray-50"
+              className="border-2 border-gray-300 text-gray-700 px-6 py-2 font-medium hover:bg-gray-50 w-full md:w-auto text-center"
               onClick={() => changePage('contact')}
             >
               Contact
@@ -301,7 +342,7 @@ function HomePage({ changePage }: { changePage: (page: PageType) => void }) {
               href="https://www.linkedin.com/in/kunalthakur15/" 
               target="_blank" 
               rel="noopener noreferrer" 
-              className="text-gray-700 hover:text-blue-500 flex items-center"
+              className="text-gray-700 hover:text-blue-500 flex items-center justify-center w-full md:w-auto"
             >
               <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" viewBox="0 0 16 16">
                 <path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854V1.146zm4.943 12.248V6.169H2.542v7.225h2.401zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248-.822 0-1.359.54-1.359 1.248 0 .694.521 1.248 1.327 1.248h.016zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016a5.54 5.54 0 0 1 .016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225h2.4z"/>
@@ -316,7 +357,7 @@ function HomePage({ changePage }: { changePage: (page: PageType) => void }) {
           What I Do
         </h2>
         
-        <div className="grid grid-cols-2 gap-8 mt-8">
+        <div className={`grid ${isMobile ? 'grid-cols-1' : 'grid-cols-2'} gap-8 mt-8`}>
           <div className="flex">
             <div className="mr-4 text-gray-400">
               <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -379,7 +420,7 @@ function HomePage({ changePage }: { changePage: (page: PageType) => void }) {
 }
 
 // Resume Page Component
-function ResumePage() {
+function ResumePage({ isMobile }: { isMobile: boolean }) {
   return (
     <div>
       <div className="flex justify-between items-center mb-12">
@@ -387,9 +428,9 @@ function ResumePage() {
         <p className="text-gray-600">17+ Years of Experience</p>
       </div>
       
-      <div className="flex">
+      <div className={`flex ${isMobile ? 'flex-col' : ''}`}>
         {/* Main content - Education and Experience */}
-        <div className="flex-1 pr-6">
+        <div className={`flex-1 ${isMobile ? '' : 'pr-6'}`}>
           <div className="mb-10">
             <h2 className="text-2xl font-semibold text-gray-800 mb-8 border-b-2 border-blue-500 pb-2 inline-block">
               Education
@@ -609,139 +650,141 @@ function ResumePage() {
         </div>
         
         {/* Right sidebar - Skills */}
-        <div className="w-80">
-          <div className="mb-10">
-            <h2 className="text-2xl font-semibold text-gray-800 mb-6 border-b-2 border-blue-500 pb-2 inline-block">
-              Core Skills
-            </h2>
-            
-            <div className="mb-4">
-              <div className="flex justify-between mb-1">
-                <span className="text-gray-700">B2B and B2C Product</span>
-                <span className="text-gray-500">100%</span>
+        {!isMobile && (
+          <div className="w-80">
+            <div className="mb-10">
+              <h2 className="text-2xl font-semibold text-gray-800 mb-6 border-b-2 border-blue-500 pb-2 inline-block">
+                Core Skills
+              </h2>
+              
+              <div className="mb-4">
+                <div className="flex justify-between mb-1">
+                  <span className="text-gray-700">B2B and B2C Product</span>
+                  <span className="text-gray-500">100%</span>
+                </div>
+                <div className="w-full bg-gray-200 rounded-full h-2">
+                  <div className="bg-blue-500 h-2 rounded-full" style={{ width: '100%' }}></div>
+                </div>
               </div>
-              <div className="w-full bg-gray-200 rounded-full h-2">
-                <div className="bg-blue-500 h-2 rounded-full" style={{ width: '100%' }}></div>
+              
+              <div className="mb-4">
+                <div className="flex justify-between mb-1">
+                  <span className="text-gray-700">AI/ML Products & Strategy</span>
+                  <span className="text-gray-500">85%</span>
+                </div>
+                <div className="w-full bg-gray-200 rounded-full h-2">
+                  <div className="bg-blue-500 h-2 rounded-full" style={{ width: '85%' }}></div>
+                </div>
               </div>
-            </div>
-            
-            <div className="mb-4">
-              <div className="flex justify-between mb-1">
-                <span className="text-gray-700">AI/ML Products & Strategy</span>
-                <span className="text-gray-500">85%</span>
+              
+              <div className="mb-4">
+                <div className="flex justify-between mb-1">
+                  <span className="text-gray-700">User Experience</span>
+                  <span className="text-gray-500">90%</span>
+                </div>
+                <div className="w-full bg-gray-200 rounded-full h-2">
+                  <div className="bg-blue-500 h-2 rounded-full" style={{ width: '90%' }}></div>
+                </div>
               </div>
-              <div className="w-full bg-gray-200 rounded-full h-2">
-                <div className="bg-blue-500 h-2 rounded-full" style={{ width: '85%' }}></div>
+              
+              <div className="mb-4">
+                <div className="flex justify-between mb-1">
+                  <span className="text-gray-700">Agile</span>
+                  <span className="text-gray-500">100%</span>
+                </div>
+                <div className="w-full bg-gray-200 rounded-full h-2">
+                  <div className="bg-blue-500 h-2 rounded-full" style={{ width: '100%' }}></div>
+                </div>
               </div>
-            </div>
-            
-            <div className="mb-4">
-              <div className="flex justify-between mb-1">
-                <span className="text-gray-700">User Experience</span>
-                <span className="text-gray-500">90%</span>
-              </div>
-              <div className="w-full bg-gray-200 rounded-full h-2">
-                <div className="bg-blue-500 h-2 rounded-full" style={{ width: '90%' }}></div>
-              </div>
-            </div>
-            
-            <div className="mb-4">
-              <div className="flex justify-between mb-1">
-                <span className="text-gray-700">Agile</span>
-                <span className="text-gray-500">100%</span>
-              </div>
-              <div className="w-full bg-gray-200 rounded-full h-2">
-                <div className="bg-blue-500 h-2 rounded-full" style={{ width: '100%' }}></div>
+
+              <div className="mb-4">
+                <div className="flex justify-between mb-1">
+                  <span className="text-gray-700">Product Vision & Roadmap</span>
+                  <span className="text-gray-500">90%</span>
+                </div>
+                <div className="w-full bg-gray-200 rounded-full h-2">
+                  <div className="bg-blue-500 h-2 rounded-full" style={{ width: '90%' }}></div>
+                </div>
               </div>
             </div>
 
-            <div className="mb-4">
-              <div className="flex justify-between mb-1">
-                <span className="text-gray-700">Product Vision & Roadmap</span>
-                <span className="text-gray-500">90%</span>
+            <div>
+              <h2 className="text-2xl font-semibold text-gray-800 mb-6 border-b-2 border-blue-500 pb-2 inline-block">
+                Other Skills
+              </h2>
+              
+              <div className="mb-4">
+                <div className="flex justify-between mb-1">
+                  <span className="text-gray-700">Team Leadership</span>
+                  <span className="text-gray-500">90%</span>
+                </div>
+                <div className="w-full bg-gray-200 rounded-full h-2">
+                  <div className="bg-blue-500 h-2 rounded-full" style={{ width: '90%' }}></div>
+                </div>
               </div>
-              <div className="w-full bg-gray-200 rounded-full h-2">
-                <div className="bg-blue-500 h-2 rounded-full" style={{ width: '90%' }}></div>
+              
+              <div className="mb-4">
+                <div className="flex justify-between mb-1">
+                  <span className="text-gray-700">Stakeholder Management</span>
+                  <span className="text-gray-500">100%</span>
+                </div>
+                <div className="w-full bg-gray-200 rounded-full h-2">
+                  <div className="bg-blue-500 h-2 rounded-full" style={{ width: '100%' }}></div>
+                </div>
+              </div>
+              
+              <div className="mb-4">
+                <div className="flex justify-between mb-1">
+                  <span className="text-gray-700">Mentoring</span>
+                  <span className="text-gray-500">90%</span>
+                </div>
+                <div className="w-full bg-gray-200 rounded-full h-2">
+                  <div className="bg-blue-500 h-2 rounded-full" style={{ width: '90%' }}></div>
+                </div>
+              </div>
+              
+              <div className="mb-4">
+                <div className="flex justify-between mb-1">
+                  <span className="text-gray-700">Recruitement & Reviews</span>
+                  <span className="text-gray-500">75%</span>
+                </div>
+                <div className="w-full bg-gray-200 rounded-full h-2">
+                  <div className="bg-blue-500 h-2 rounded-full" style={{ width: '75%' }}></div>
+                </div>
               </div>
             </div>
-          </div>
 
-          <div>
-            <h2 className="text-2xl font-semibold text-gray-800 mb-6 border-b-2 border-blue-500 pb-2 inline-block">
-              Other Skills
-            </h2>
-            
-            <div className="mb-4">
-              <div className="flex justify-between mb-1">
-                <span className="text-gray-700">Team Leadership</span>
-                <span className="text-gray-500">90%</span>
+            <div className="mt-10">
+              <h2 className="text-2xl font-semibold text-gray-800 mb-6 border-b-2 border-blue-500 pb-2 inline-block">
+                Certifications
+              </h2>
+              
+              <div className="mb-4">
+                <div className="flex justify-between mb-1">
+                  <span className="text-gray-700">AWS Cloud Practitioner</span>
+                </div>
               </div>
-              <div className="w-full bg-gray-200 rounded-full h-2">
-                <div className="bg-blue-500 h-2 rounded-full" style={{ width: '90%' }}></div>
+              
+              <div className="mb-4">
+                <div className="flex justify-between mb-1">
+                  <span className="text-gray-700">PMP</span>
+                </div>
               </div>
-            </div>
-            
-            <div className="mb-4">
-              <div className="flex justify-between mb-1">
-                <span className="text-gray-700">Stakeholder Management</span>
-                <span className="text-gray-500">100%</span>
+              
+              <div className="mb-4">
+                <div className="flex justify-between mb-1">
+                  <span className="text-gray-700">PSM 1</span>
+                </div>
               </div>
-              <div className="w-full bg-gray-200 rounded-full h-2">
-                <div className="bg-blue-500 h-2 rounded-full" style={{ width: '100%' }}></div>
-              </div>
-            </div>
-            
-            <div className="mb-4">
-              <div className="flex justify-between mb-1">
-                <span className="text-gray-700">Mentoring</span>
-                <span className="text-gray-500">90%</span>
-              </div>
-              <div className="w-full bg-gray-200 rounded-full h-2">
-                <div className="bg-blue-500 h-2 rounded-full" style={{ width: '90%' }}></div>
-              </div>
-            </div>
-            
-            <div className="mb-4">
-              <div className="flex justify-between mb-1">
-                <span className="text-gray-700">Recruitement & Reviews</span>
-                <span className="text-gray-500">75%</span>
-              </div>
-              <div className="w-full bg-gray-200 rounded-full h-2">
-                <div className="bg-blue-500 h-2 rounded-full" style={{ width: '75%' }}></div>
+              
+              <div className="mb-4">
+                <div className="flex justify-between mb-1">
+                  <span className="text-gray-700">SCJP</span>
+                </div>
               </div>
             </div>
           </div>
-
-          <div className="mt-10">
-            <h2 className="text-2xl font-semibold text-gray-800 mb-6 border-b-2 border-blue-500 pb-2 inline-block">
-              Certifications
-            </h2>
-            
-            <div className="mb-4">
-              <div className="flex justify-between mb-1">
-                <span className="text-gray-700">AWS Cloud Practitioner</span>
-              </div>
-            </div>
-            
-            <div className="mb-4">
-              <div className="flex justify-between mb-1">
-                <span className="text-gray-700">PMP</span>
-              </div>
-            </div>
-            
-            <div className="mb-4">
-              <div className="flex justify-between mb-1">
-                <span className="text-gray-700">PSM 1</span>
-              </div>
-            </div>
-            
-            <div className="mb-4">
-              <div className="flex justify-between mb-1">
-                <span className="text-gray-700">SCJP</span>
-              </div>
-            </div>
-          </div>
-        </div>
+        )}
       </div>
     </div>
   );
