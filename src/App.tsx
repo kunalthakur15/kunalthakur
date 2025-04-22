@@ -365,9 +365,9 @@ function HomePage({ changePage, isMobile }: { changePage: (page: PageType) => vo
               </svg>
             </div>
             <div>
-              <h3 className="text-xl font-semibold text-gray-800 mb-2">Ecommerce</h3>
+              <h3 className="text-xl font-semibold text-gray-800 mb-2">B2C & B2B Product Management</h3>
               <p className="text-gray-600">
-                Pellentesque pellentesque, ipsum sit amet auctor accumsan, odio tortor bibendum massa, sit amet ultricies ex lectus scelerisque nibh. Ut non sodales odio.
+                With over 13 years of driving product success across both B2C and B2B domains, I specialize in crafting scalable, high-impact products that deliver real value. From early-stage startups to enterprise ecosystems, I bring a track record of launching and growing products that users love and businesses depend on.
               </p>
             </div>
           </div>
@@ -379,9 +379,9 @@ function HomePage({ changePage, isMobile }: { changePage: (page: PageType) => vo
               </svg>
             </div>
             <div>
-              <h3 className="text-xl font-semibold text-gray-800 mb-2">Copywriter</h3>
+              <h3 className="text-xl font-semibold text-gray-800 mb-2">AI/ML Product Strategy</h3>
               <p className="text-gray-600">
-                Pellentesque pellentesque, ipsum sit amet auctor accumsan, odio tortor bibendum massa, sit amet ultricies ex lectus scelerisque nibh. Ut non sodales odio.
+                I bridge the gap between cutting-edge AI/ML technology and market-ready products. My experience lies in turning complex algorithms into intuitive, impactful features that solve real-world problems—grounded in customer insights, built for scale.
               </p>
             </div>
           </div>
@@ -393,9 +393,9 @@ function HomePage({ changePage, isMobile }: { changePage: (page: PageType) => vo
               </svg>
             </div>
             <div>
-              <h3 className="text-xl font-semibold text-gray-800 mb-2">Web Design</h3>
+              <h3 className="text-xl font-semibold text-gray-800 mb-2">User Experience</h3>
               <p className="text-gray-600">
-                Pellentesque pellentesque, ipsum sit amet auctor accumsan, odio tortor bibendum massa, sit amet ultricies ex lectus scelerisque nibh. Ut non sodales odio.
+                Great products begin and end with the user. I champion design thinking and user-centric innovation, ensuring every interaction is purposeful, frictionless, and delightful—because a stellar user experience isn’t optional, it’s a competitive edge.
               </p>
             </div>
           </div>
@@ -407,9 +407,9 @@ function HomePage({ changePage, isMobile }: { changePage: (page: PageType) => vo
               </svg>
             </div>
             <div>
-              <h3 className="text-xl font-semibold text-gray-800 mb-2">Management</h3>
+              <h3 className="text-xl font-semibold text-gray-800 mb-2">Consulting</h3>
               <p className="text-gray-600">
-                Pellentesque pellentesque, ipsum sit amet auctor accumsan, odio tortor bibendum massa, sit amet ultricies ex lectus scelerisque nibh. Ut non sodales odio.
+                I partner with teams to accelerate product vision, strategy, and execution. Whether you're refining product-market fit, scaling operations, or exploring a new vertical, I bring seasoned, hands-on insight to help you move faster and smarter be it product, user expereince or getting something implemented and tracking it.
               </p>
             </div>
           </div>
