@@ -813,6 +813,143 @@ function ResumePage({ isMobile }: { isMobile?: boolean }) {
             </div>
           </div>
         )}
+        
+        {/* Skills and Certifications for Mobile */}
+        {isMobile && (
+          <div className="mt-12">
+            <div className="mb-10">
+              <h2 className="text-xl font-semibold text-gray-800 mb-6 border-b-2 border-[#0099e5] pb-1 inline-block">
+                Core Skills
+              </h2>
+              
+              <div className="mb-4">
+                <div className="flex justify-between mb-1">
+                  <span className="text-sm text-gray-700">B2B and B2C Product</span>
+                  <span className="text-sm text-gray-500">100%</span>
+                </div>
+                <div className="w-full bg-gray-200 rounded-full h-2">
+                  <div className="bg-[#0099e5] h-2 rounded-full" style={{ width: '100%' }}></div>
+                </div>
+              </div>
+              
+              <div className="mb-4">
+                <div className="flex justify-between mb-1">
+                  <span className="text-sm text-gray-700">AI/ML Products & Strategy</span>
+                  <span className="text-sm text-gray-500">85%</span>
+                </div>
+                <div className="w-full bg-gray-200 rounded-full h-2">
+                  <div className="bg-[#0099e5] h-2 rounded-full" style={{ width: '85%' }}></div>
+                </div>
+              </div>
+              
+              <div className="mb-4">
+                <div className="flex justify-between mb-1">
+                  <span className="text-sm text-gray-700">User Experience</span>
+                  <span className="text-sm text-gray-500">90%</span>
+                </div>
+                <div className="w-full bg-gray-200 rounded-full h-2">
+                  <div className="bg-[#0099e5] h-2 rounded-full" style={{ width: '90%' }}></div>
+                </div>
+              </div>
+              
+              <div className="mb-4">
+                <div className="flex justify-between mb-1">
+                  <span className="text-sm text-gray-700">Agile</span>
+                  <span className="text-sm text-gray-500">100%</span>
+                </div>
+                <div className="w-full bg-gray-200 rounded-full h-2">
+                  <div className="bg-[#0099e5] h-2 rounded-full" style={{ width: '100%' }}></div>
+                </div>
+              </div>
+              
+              <div className="mb-4">
+                <div className="flex justify-between mb-1">
+                  <span className="text-sm text-gray-700">Product Vision & Roadmap</span>
+                  <span className="text-sm text-gray-500">90%</span>
+                </div>
+                <div className="w-full bg-gray-200 rounded-full h-2">
+                  <div className="bg-[#0099e5] h-2 rounded-full" style={{ width: '90%' }}></div>
+                </div>
+              </div>
+            </div>
+            
+            <div className="mb-10">
+              <h2 className="text-xl font-semibold text-gray-800 mb-6 border-b-2 border-[#0099e5] pb-1 inline-block">
+                Other Skills
+              </h2>
+              
+              <div className="mb-4">
+                <div className="flex justify-between mb-1">
+                  <span className="text-sm text-gray-700">Team Leadership</span>
+                  <span className="text-sm text-gray-500">90%</span>
+                </div>
+                <div className="w-full bg-gray-200 rounded-full h-2">
+                  <div className="bg-[#0099e5] h-2 rounded-full" style={{ width: '90%' }}></div>
+                </div>
+              </div>
+              
+              <div className="mb-4">
+                <div className="flex justify-between mb-1">
+                  <span className="text-sm text-gray-700">Stakeholder Management</span>
+                  <span className="text-sm text-gray-500">100%</span>
+                </div>
+                <div className="w-full bg-gray-200 rounded-full h-2">
+                  <div className="bg-[#0099e5] h-2 rounded-full" style={{ width: '100%' }}></div>
+                </div>
+              </div>
+              
+              <div className="mb-4">
+                <div className="flex justify-between mb-1">
+                  <span className="text-sm text-gray-700">Mentoring</span>
+                  <span className="text-sm text-gray-500">90%</span>
+                </div>
+                <div className="w-full bg-gray-200 rounded-full h-2">
+                  <div className="bg-[#0099e5] h-2 rounded-full" style={{ width: '90%' }}></div>
+                </div>
+              </div>
+              
+              <div className="mb-4">
+                <div className="flex justify-between mb-1">
+                  <span className="text-sm text-gray-700">Recruitement & Reviews</span>
+                  <span className="text-sm text-gray-500">75%</span>
+                </div>
+                <div className="w-full bg-gray-200 rounded-full h-2">
+                  <div className="bg-[#0099e5] h-2 rounded-full" style={{ width: '75%' }}></div>
+                </div>
+              </div>
+            </div>
+            
+            <div>
+              <h2 className="text-xl font-semibold text-gray-800 mb-6 border-b-2 border-[#0099e5] pb-1 inline-block">
+                Certifications
+              </h2>
+              
+              <div className="mb-4">
+                <div className="flex justify-between mb-1">
+                  <span className="text-sm text-gray-700">AWS Cloud Practitioner</span>
+                </div>
+              </div>
+              
+              <div className="mb-4">
+                <div className="flex justify-between mb-1">
+                  <span className="text-sm text-gray-700">PMP</span>
+                </div>
+              </div>
+              
+              <div className="mb-4">
+                <div className="flex justify-between mb-1">
+                  <span className="text-sm text-gray-700">PSM 1</span>
+                </div>
+              </div>
+              
+              <div className="mb-4">
+                <div className="flex justify-between mb-1">
+                  <span className="text-sm text-gray-700">SCJP</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
