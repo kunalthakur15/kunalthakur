@@ -7,162 +7,330 @@ type PageType = 'home' | 'about' | 'resume' | 'portfolio' | 'blog' | 'contact' |
 type TransitionType = 'page-exit' | 'page-enter' | '';
 
 // Component definitions
-const InterestsSection = () => {
-  const interests = [
-    {
-      icon: <Trophy size={40} />,
-      title: "Cricket"
-    },
-    {
-      icon: <BookOpen size={40} />,
-      title: "Reading"
-    },
-    {
-      icon: <Globe size={40} />,
-      title: "Travelling"
-    },
-    {
-      icon: <Bike size={40} />,
-      title: "Motorbiking"
-    },
-    {
-      icon: <Camera size={40} />,
-      title: "Photography"
-    }
-  ];
+const interestsData = [
+  {
+    icon: (
+      <a href="https://sillypointers.com/" target="_blank" rel="noopener noreferrer">
+        <Trophy className="w-10 h-10" />
+      </a>
+    ),
+    name: "CRICKET",
+    description: "Playing & watching cricket matches",
+    backgroundImage: "https://images.unsplash.com/photo-1531415074968-036ba1b575da?w=500&auto=format&fit=crop&q=60",
+  },
+  {
+    icon: (
+      <a href="https://www.goodreads.com/review/list/5933376-kunal-thakur?ref=nav_mybooks&shelf=read" target="_blank" rel="noopener noreferrer">
+        <BookOpen className="w-10 h-10" />
+      </a>
+    ),
+    name: "READING",
+    description: "Fiction & non-fiction literature",
+    backgroundImage: "https://images.unsplash.com/photo-1519682337058-a94d519337bc?w=500&auto=format&fit=crop&q=60",
+  },
+  {
+    icon: <Globe className="w-10 h-10" />,
+    name: "TRAVELLING",
+    description: "Exploring new places & cultures",
+    backgroundImage: "https://images.unsplash.com/photo-1503220317375-aaad61436b1b?w=500&auto=format&fit=crop&q=60",
+  },
+  {
+    icon: <Bike className="w-10 h-10" />,
+    name: "MOTORBIKING",
+    description: "Adventures on two wheels",
+    backgroundImage: "https://images.unsplash.com/photo-1558981359-219d6364c9c8?w=500&auto=format&fit=crop&q=60",
+  },
+  {
+    icon: <Camera className="w-10 h-10" />,
+    name: "PHOTOGRAPHY",
+    description: "Capturing moments & landscapes",
+    backgroundImage: "https://images.unsplash.com/photo-1542038784456-1ea8e935640e?w=500&auto=format&fit=crop&q=60",
+  },
+];
 
+const InterestsSection = () => {
   return (
-    <div className="max-w-5xl mx-auto bg-white p-6 shadow-sm rounded">
-      <h2 className="text-2xl font-semibold mb-6 border-b-2 border-blue-500 pb-2 inline-block">
-        Interests
-      </h2>
-      
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 mt-8">
-        {interests.map((interest, index) => (
-          <div 
-            key={index} 
-            className="flex flex-col items-center justify-center text-center p-4 hover:bg-gray-50 rounded transition-colors duration-200 group"
-          >
-            <div className="mb-4 p-4 bg-gray-50 rounded-full flex items-center justify-center transition-colors duration-200">
-              <div className="text-gray-500 group-hover:text-blue-500 transition-colors duration-200">
-                {interest.icon}
+    <div className="min-h-[60vh] bg-gradient-to-b from-gray-50 to-gray-100 py-2">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="mb-8">
+          <h1 className="text-2xl md:text-3xl font-semibold text-gray-800 pb-4 border-b border-gray-200">
+            Interests
+          </h1>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 mt-4">
+          {interestsData.map((interest, index) => {
+            // Make Cricket and Reading cards fully clickable
+            if (index === 0) {
+              return (
+                <a
+                  key={index}
+                  href="https://sillypointers.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group relative bg-white rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden h-64 block"
+                  style={{
+                    backgroundImage: `linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.7)),url(${interest.backgroundImage})`,
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                  }}
+                >
+                  <div className="absolute top-0 left-0 w-2 h-full bg-[#0099e5] transform origin-left scale-y-0 group-hover:scale-y-100 transition-transform duration-300"></div>
+                  <div className="p-8 flex flex-col items-center text-center h-full relative z-10">
+                    <div className="w-20 h-20 flex items-center justify-center rounded-full bg-white/20 backdrop-blur-sm mb-6 group-hover:animate-pulse-soft">
+                      <div className="text-white group-hover:text-white transition-colors duration-300">
+                        <Trophy className="w-10 h-10" />
+                      </div>
+                    </div>
+                    <h3 className="font-medium text-white tracking-wide text-lg mb-3">
+                      {interest.name}
+                    </h3>
+                    <p className="text-white/80 text-sm">
+                      {interest.description}
+                    </p>
+                    <div className="mt-auto pt-4">
+                      <span className="inline-block w-8 h-1 bg-white/60 rounded-full transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></span>
+                    </div>
+                  </div>
+                </a>
+              );
+            }
+            if (index === 1) {
+              return (
+                <a
+                  key={index}
+                  href="https://www.goodreads.com/review/list/5933376-kunal-thakur?ref=nav_mybooks&shelf=read"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group relative bg-white rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden h-64 block"
+                  style={{
+                    backgroundImage: `linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.7)),url(${interest.backgroundImage})`,
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                  }}
+                >
+                  <div className="absolute top-0 left-0 w-2 h-full bg-[#0099e5] transform origin-left scale-y-0 group-hover:scale-y-100 transition-transform duration-300"></div>
+                  <div className="p-8 flex flex-col items-center text-center h-full relative z-10">
+                    <div className="w-20 h-20 flex items-center justify-center rounded-full bg-white/20 backdrop-blur-sm mb-6 group-hover:animate-pulse-soft">
+                      <div className="text-white group-hover:text-white transition-colors duration-300">
+                        <BookOpen className="w-10 h-10" />
+                      </div>
+                    </div>
+                    <h3 className="font-medium text-white tracking-wide text-lg mb-3">
+                      {interest.name}
+                    </h3>
+                    <p className="text-white/80 text-sm">
+                      {interest.description}
+                    </p>
+                    <div className="mt-auto pt-4">
+                      <span className="inline-block w-8 h-1 bg-white/60 rounded-full transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></span>
+                    </div>
+                  </div>
+                </a>
+              );
+            }
+            // Other cards remain unchanged
+            return (
+              <div
+                key={index}
+                className="group relative bg-white rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden h-64"
+                style={{
+                  backgroundImage: `linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.7)),url(${interest.backgroundImage})`,
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                }}
+              >
+                <div className="absolute top-0 left-0 w-2 h-full bg-[#0099e5] transform origin-left scale-y-0 group-hover:scale-y-100 transition-transform duration-300"></div>
+                <div className="p-8 flex flex-col items-center text-center h-full relative z-10">
+                  <div className="w-20 h-20 flex items-center justify-center rounded-full bg-white/20 backdrop-blur-sm mb-6 group-hover:animate-pulse-soft">
+                    <div className="text-white group-hover:text-white transition-colors duration-300">
+                      {interest.icon}
+                    </div>
+                  </div>
+                  <h3 className="font-medium text-white tracking-wide text-lg mb-3">
+                    {interest.name}
+                  </h3>
+                  <p className="text-white/80 text-sm">
+                    {interest.description}
+                  </p>
+                  <div className="mt-auto pt-4">
+                    <span className="inline-block w-8 h-1 bg-white/60 rounded-full transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></span>
+                  </div>
+                </div>
               </div>
-            </div>
-            <h3 className="text-lg font-medium uppercase tracking-wide text-gray-700">
-              {interest.title}
-            </h3>
-          </div>
-        ))}
+            );
+          })}
+        </div>
       </div>
     </div>
   );
 };
 
 function InterestsPage({ isMobile }: { isMobile?: boolean }) {
-  const interests = [
-    {
-      icon: <a href="https://sillypointers.com/" target="_blank" rel="noopener noreferrer"><Trophy size={40} /></a>,
-      title: "Cricket"
-    },
-    {
-      icon: <a href="https://www.goodreads.com/review/list/5933376-kunal-thakur?ref=nav_mybooks&shelf=read" target="_blank" rel="noopener noreferrer"><BookOpen size={40} /></a>,
-      title: "Reading"
-    },
-    {
-      icon: <Globe size={40} />,
-      title: "Travelling"
-    },
-    {
-      icon: <Bike size={40} />,
-      title: "Motorbiking"
-    },
-    {
-      icon: <Camera size={40} />,
-      title: "Photography"
-    }
-  ];
-
   return (
-    <div>
-      <div className="flex justify-between items-center mb-12">
-        <h1 className="text-3xl font-bold text-gray-800">Interests</h1>
+    <>
+      <div className="mb-8">
+        <h1 className="text-2xl md:text-3xl font-semibold text-gray-800 pb-4 border-b border-gray-200">
+          Interests
+        </h1>
       </div>
-      
-      <div className="flex justify-center">
-        <div className="flex-1 max-w-4xl">
-          <div className={`grid ${isMobile ? 'grid-cols-1' : 'grid-cols-2'} gap-12 mt-8`}>
-            {interests.slice(0, 4).map((interest, index) => (
-              <div 
-                key={index} 
-                className="flex flex-col items-center justify-center text-center p-4 hover:bg-gray-50 rounded transition-colors duration-200 group"
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 mt-4">
+        {interestsData.map((interest, index) => {
+          // Make Cricket and Reading cards fully clickable
+          if (index === 0) {
+            return (
+              <a
+                key={index}
+                href="https://sillypointers.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group relative bg-white rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden h-64 block"
+                style={{
+                  backgroundImage: `linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.7)),url(${interest.backgroundImage})`,
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                }}
               >
-                <div className="mb-4 p-4 bg-gray-50 rounded-full flex items-center justify-center transition-colors duration-200">
-                  <div className="text-gray-500 group-hover:text-blue-500 transition-colors duration-200">
+                <div className="absolute top-0 left-0 w-2 h-full bg-[#0099e5] transform origin-left scale-y-0 group-hover:scale-y-100 transition-transform duration-300"></div>
+                <div className="p-8 flex flex-col items-center text-center h-full relative z-10">
+                  <div className="w-20 h-20 flex items-center justify-center rounded-full bg-white/20 backdrop-blur-sm mb-6 group-hover:animate-pulse-soft">
+                    <div className="text-white group-hover:text-white transition-colors duration-300">
+                      <Trophy className="w-10 h-10" />
+                    </div>
+                  </div>
+                  <h3 className="font-medium text-white tracking-wide text-lg mb-3">
+                    {interest.name}
+                  </h3>
+                  <p className="text-white/80 text-sm">
+                    {interest.description}
+                  </p>
+                  <div className="mt-auto pt-4">
+                    <span className="inline-block w-8 h-1 bg-white/60 rounded-full transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></span>
+                  </div>
+                </div>
+              </a>
+            );
+          }
+          if (index === 1) {
+            return (
+              <a
+                key={index}
+                href="https://www.goodreads.com/review/list/5933376-kunal-thakur?ref=nav_mybooks&shelf=read"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group relative bg-white rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden h-64 block"
+                style={{
+                  backgroundImage: `linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.7)),url(${interest.backgroundImage})`,
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                }}
+              >
+                <div className="absolute top-0 left-0 w-2 h-full bg-[#0099e5] transform origin-left scale-y-0 group-hover:scale-y-100 transition-transform duration-300"></div>
+                <div className="p-8 flex flex-col items-center text-center h-full relative z-10">
+                  <div className="w-20 h-20 flex items-center justify-center rounded-full bg-white/20 backdrop-blur-sm mb-6 group-hover:animate-pulse-soft">
+                    <div className="text-white group-hover:text-white transition-colors duration-300">
+                      <BookOpen className="w-10 h-10" />
+                    </div>
+                  </div>
+                  <h3 className="font-medium text-white tracking-wide text-lg mb-3">
+                    {interest.name}
+                  </h3>
+                  <p className="text-white/80 text-sm">
+                    {interest.description}
+                  </p>
+                  <div className="mt-auto pt-4">
+                    <span className="inline-block w-8 h-1 bg-white/60 rounded-full transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></span>
+                  </div>
+                </div>
+              </a>
+            );
+          }
+          // Other cards remain unchanged
+          return (
+            <div
+              key={index}
+              className="group relative bg-white rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden h-64"
+              style={{
+                backgroundImage: `linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.7)),url(${interest.backgroundImage})`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+              }}
+            >
+              <div className="absolute top-0 left-0 w-2 h-full bg-[#0099e5] transform origin-left scale-y-0 group-hover:scale-y-100 transition-transform duration-300"></div>
+              <div className="p-8 flex flex-col items-center text-center h-full relative z-10">
+                <div className="w-20 h-20 flex items-center justify-center rounded-full bg-white/20 backdrop-blur-sm mb-6 group-hover:animate-pulse-soft">
+                  <div className="text-white group-hover:text-white transition-colors duration-300">
                     {interest.icon}
                   </div>
                 </div>
-                <h3 className="text-lg font-medium uppercase tracking-wide text-gray-700">
-                  {interest.title}
+                <h3 className="font-medium text-white tracking-wide text-lg mb-3">
+                  {interest.name}
                 </h3>
-              </div>
-            ))}
-          </div>
-          <div className="flex justify-center mt-12">
-            <div className="flex flex-col items-center justify-center text-center p-4 hover:bg-gray-50 rounded transition-colors duration-200 group">
-              <div className="mb-4 p-4 bg-gray-50 rounded-full flex items-center justify-center transition-colors duration-200">
-                <div className="text-gray-500 group-hover:text-blue-500 transition-colors duration-200">
-                  {interests[4].icon}
+                <p className="text-white/80 text-sm">
+                  {interest.description}
+                </p>
+                <div className="mt-auto pt-4">
+                  <span className="inline-block w-8 h-1 bg-white/60 rounded-full transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></span>
                 </div>
               </div>
-              <h3 className="text-lg font-medium uppercase tracking-wide text-gray-700">
-                {interests[4].title}
-              </h3>
             </div>
-          </div>
-        </div>
+          );
+        })}
       </div>
-    </div>
+    </>
   );
 }
 
 function ContactPage({ isMobile }: { isMobile?: boolean }) {
+  const contactCards = [
+    {
+      icon: <Phone size={28} className="text-white" />, 
+      title: 'Phone',
+      value: '+919686532842',
+      bg: 'https://images.unsplash.com/photo-1500673922987-e212871fec22?w=500&auto=format&fit=crop&q=60',
+    },
+    {
+      icon: <MapPin size={28} className="text-white" />, 
+      title: 'Location',
+      value: 'Noida, India',
+      bg: 'https://images.unsplash.com/photo-1482881497185-d4a9ddbe4151?w=500&auto=format&fit=crop&q=60',
+    },
+    {
+      icon: <Mail size={28} className="text-white" />, 
+      title: 'Email',
+      value: 'kunalthakur15@gmail.com',
+      bg: 'https://images.unsplash.com/photo-1470813740244-df37b8c1edcb?w=500&auto=format&fit=crop&q=60',
+    },
+  ];
   return (
     <div>
-      <div className="flex justify-between items-center mb-8">
-        <h1 className="text-2xl md:text-3xl font-semibold text-gray-800">Get In Touch</h1>
+      <div className="mb-8">
+        <h1 className="text-2xl md:text-3xl font-semibold text-gray-800 pb-4 border-b border-gray-200">Get In Touch</h1>
       </div>
-      
       <div className="flex flex-col justify-center min-h-[calc(100vh-12rem)]">
-        <div className={`max-w-4xl mx-auto ${!isMobile ? 'grid grid-cols-3 gap-6' : 'grid grid-cols-1 gap-4 w-full px-4'}`}>
-          <div className={`${!isMobile ? 'bg-white p-6 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 ease-in-out' : 'bg-white p-6 rounded-lg shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 ease-in-out w-full'}`}>
-            <div className="flex flex-col items-center text-center">
-              <div className="mb-4 p-4 bg-gray-50 rounded-full">
-                <Phone size={28} className="text-gray-500" />
+        <div className={`max-w-5xl mx-auto ${!isMobile ? 'grid grid-cols-3 gap-x-8 gap-y-6' : 'grid grid-cols-1 gap-4 w-full px-4'}`}>
+          {contactCards.map((card, idx) => (
+            <div
+              key={card.title}
+              className={`relative rounded-2xl overflow-hidden shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 ease-in-out group flex items-center justify-center min-h-[180px] md:min-h-[320px] md:aspect-square`}
+              style={{
+                backgroundImage: `linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.7)),url(${card.bg})`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+              }}
+            >
+              <div className="flex flex-col items-center text-center w-full">
+                <div className="mb-4 p-4 bg-black/40 rounded-full flex items-center justify-center">
+                  {card.icon}
+                </div>
+                <h3 className="text-xl font-semibold text-white mb-2">{card.title}</h3>
+                <p className="text-base text-white/90">
+                  {card.title === 'Email' ? (
+                    <a href={`mailto:${card.value}`} className="hover:underline text-white/90">{card.value}</a>
+                  ) : card.value}
+                </p>
               </div>
-              <h3 className="text-base font-medium text-gray-900">Phone</h3>
-              <p className="text-sm text-gray-600 mt-2">+919686532842</p>
             </div>
-          </div>
-          
-          <div className={`${!isMobile ? 'bg-white p-6 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 ease-in-out' : 'bg-white p-6 rounded-lg shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 ease-in-out w-full'}`}>
-            <div className="flex flex-col items-center text-center">
-              <div className="mb-4 p-4 bg-gray-50 rounded-full">
-                <MapPin size={28} className="text-gray-500" />
-              </div>
-              <h3 className="text-base font-medium text-gray-900">Location</h3>
-              <p className="text-sm text-gray-600 mt-2">Noida, India</p>
-            </div>
-          </div>
-          
-          <div className={`${!isMobile ? 'bg-white p-6 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 ease-in-out' : 'bg-white p-6 rounded-lg shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 ease-in-out w-full'}`}>
-            <div className="flex flex-col items-center text-center">
-              <div className="mb-4 p-4 bg-gray-50 rounded-full">
-                <Mail size={28} className="text-gray-500" />
-              </div>
-              <h3 className="text-base font-medium text-gray-900">Email</h3>
-              <p className="text-sm text-gray-600 mt-2">kunalthakur15@gmail.com</p>
-            </div>
-          </div>
+          ))}
         </div>
       </div>
     </div>
@@ -713,10 +881,10 @@ function ResumePage({ isMobile }: { isMobile?: boolean }) {
               <div className="w-full bg-gray-200 rounded-full h-2">
                   <div className="bg-[#0099e5] h-2 rounded-full" style={{ width: '90%' }}></div>
                 </div>
-            </div>
-            
-            <div className="mb-4">
-              <div className="flex justify-between mb-1">
+              </div>
+              
+              <div className="mb-4">
+                <div className="flex justify-between mb-1">
                   <span className="text-sm text-gray-700">Agile</span>
                   <span className="text-sm text-gray-500">100%</span>
                 </div>
